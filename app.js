@@ -14,6 +14,7 @@ var app = express();
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
+//app.engine('html', require('ejs').renderFile);
 app.set('view engine', 'jade');
 
 app.use(favicon());
@@ -39,7 +40,12 @@ app.use(flash());
 // Initialize Passport
 var initPassport = require('./passport/init');
 initPassport(passport);
-
+/*
+app.post('/poll_submit', function(req, res) {
+		console.log(req.body);
+		//res.render('newpoll', { num: req.body.opt_number });
+	});
+*/
 var routes = require('./routes/index')(passport);
 app.use('/', routes);
 

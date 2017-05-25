@@ -1,15 +1,94 @@
+html.
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+	<!-- Optional theme -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+
+	<!-- Latest compiled and minified JavaScript -->
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+
 extends layout
 
 block content
-	div.container
+	div.container-fluid
 		div.row
-			div.col-sm-6.col-md-4.col-md-offset-4
-				#user
-					h1.text-center.login-title Welcome #{user.firstName}. Check your details below:
-						div.signup-wall
-							ul.user-details
-								li Username ---> #{user.username}
-								li Email    ---> #{user.email}
-								li First Name ---> #{user.firstName} 
-								li Last Name ---> #{user.lastName}
-						a(href='/signout', class='text-center new-account') Sign Out
+			h1.text-left Welcome #{user.username}.
+			div.col-xs-4
+								
+								
+								h4 Polls by #{user.username}
+								
+								
+								
+								each item in arr
+									li 
+										a(href='/displaypoll'+'?name='+item) #{item}
+								
+								
+			div.col-xs-6
+				
+				html.
+					
+					
+					
+					
+					
+					
+					
+					
+					<h4>Create new poll</h4>
+					<form class="pollname" , action="/poll_submit", method="POST">
+					<p>Pollname
+					<input type='text', name='pollname', placeholder='pollname',required, autofocus)></input>
+					</p>
+					<p>Number of choices 
+					
+					<button id="plus" , type="button" class='btn btn-sm btn-primary'>+</button>
+					<button id="minus", type="button" class='btn btn-sm btn-primary'>-</button>
+					</p>
+					
+					<div id="choices"></div>
+					<p></p>
+					<button class='btn btn-md btn-primary', type='submit'>Submit poll</button>
+					
+					</form>
+					</div>
+					
+					
+					
+					
+					<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
+					<script>
+					$(document).ready(function(){
+						//$("#test").hide()
+						//$("#test").mouseenter(function(){
+						//	alert("You entered p1!");
+						//});
+			
+							var n=1;
+							$("#choices").empty();
+							//$("#choices").append('<form class="pollname" , action="/poll_submit", method="POST">')
+								for (var i=0;i<=n;i++){
+									$("#choices").append("<input type='text', name='opt_number"+i+"' ,"+ "class='form-control', placeholder='option"+i+"'"+" ,required, autofocus></input>");
+							}
+							$("#plus" ).click(function() {
+							n++;
+							$("#choices").empty();
+							//$("#choices").append('<form class="pollname" , action="/poll_submit", method="POST">')
+								for (var i=0;i<=n;i++){
+									$("#choices").append("<input type='text', name='opt_number"+i+"' ,"+ "class='form-control', placeholder='option"+i+"'"+" ,required, autofocus></input>");
+							}})
+							$("#minus" ).click(function() {
+								n--;
+								$("#choices").empty();
+								//$("#choices").append(n);
+							//	$("#choices").append('<form class="pollname" , action="/poll_submit", method="POST">')
+								for (var i=0;i<=n;i++){
+									$("#choices").append("<input type='text', name='opt_number"+i+"' ,"+ "class='form-control', placeholder='option"+i+"'"+" ,required, autofocus></input>");
+							}})
+							})
+					</script>
+			p
+				p
+					p
+						a(href='/logout') logout
