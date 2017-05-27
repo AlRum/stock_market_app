@@ -5,5 +5,6 @@ module.exports = mongoose.model('Poll2',{
 	pollname: String,
 	author:String,
 	opt_number: Number,
+	total_votes: Number,
 	opts: [mongoose.Schema.Types.Mixed]//new mongoose.Schema ({name:String, votes:Number}, {_id: false})]
 });

@@ -54,13 +54,28 @@ module.exports = function(passport){
 				for (var i=0;i<kittens.length;i++){
 					names.push(kittens[i].pollname);
 				}
+		var names_all=[];		
+		Poll2.find({},function (err, kittens) {
+			if (err) return console.error(err);
+				console.log(JSON.stringify(kittens.opts));
+				//console.log(kittens[2].pollname);
 				
+				
+				
+				var i=0;
+				while (kittens[i]!=undefined){
+					names_all.push(kittens[i].pollname);
+					i++;
+					if (i>5) break;
+				}
+		console.log(names_all)
+		console.log('idiots')
 				//, {arr: JSON.stringify([{'idiot':'idiot'}, {'fool':'fool'}])})//{arr:JSON.stringify([{idiot:"idiot"}])});
 				
 											
 		//res.render('home.jade', { user: req.user, arr: JSON.stringify(names) });
-		res.render('home.jade', { user: req.user, arr: names });
-	});
+		res.render('home.jade', { user: req.user, arr: names, arr_all:names_all  });
+	})});
 	})
 
 	/* Handle Logout */
@@ -78,7 +93,10 @@ module.exports = function(passport){
 			if (err) return console.error(err);
 				console.log(JSON.stringify(kittens.author))
 				if (req.user) {
+					if (req.user.username==kittens.author){
     				res.render('display_poll_logged_in.jade', {arr: JSON.stringify(kittens), name:req.query.name})// logged in
+					} else
+					{res.render('display_poll_logged_in_no_delete.jade', {arr: JSON.stringify(kittens), name:req.query.name})}
 						} else {
 					res.render('display_poll.jade', {arr: JSON.stringify(kittens), name:req.query.name})
     					// not logged in
@@ -121,6 +139,7 @@ module.exports = function(passport){
 					if (u[i].name==req.body.opts){
 						u[i].votes=u[i].votes+1
 				}}
+				kittens.total_votes=kittens.total_votes+1;
 				//kittens.opts=['idiots','idiots','idiots'];
 				//kittens.pollname='@@@';
 				console.log(u);
@@ -163,6 +182,7 @@ module.exports = function(passport){
 		var u2=req.user.username;
 		testpoll.pollname=u;
 		testpoll.author=u2;
+		testpoll.total_votes=0;
 		console.log(u.toString());
 		console.log(u2.toString());
 		

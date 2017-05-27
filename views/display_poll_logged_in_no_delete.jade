@@ -56,7 +56,7 @@ block content
       
               // Set chart options
               var options = {'title':'Poll results',
-                             'width':600,
+                             'width':400,
                              is3D: true,
                              'height':300,
                               legend:{textStyle:{fontSize:'16', fontName:'Arial'}},
@@ -74,9 +74,8 @@ block content
         <body>
           <!--Div that will hold the pie chart-->
           <div id="chart_div"></div>
-          </div>
         </body>
-        
+      
         <script>
           document.write ('<p>Vote!</p>');
           document.write ("<form class='form-vote',id='idiots', action='/update_poll', method='POST'>");
@@ -93,14 +92,8 @@ block content
           var formData = new FormData(document.forms.person);
           formData.append("patronym", "Робертович");
         </script>
-        <script>
-        $(".btn" ).click(function() {
-            //$(this).css( "border", "3px solid red" );
-            $(this).css('background-color', '#ff0000');
-          })
-        </script>        
+        
+        
       a(href='/../home') home
-      p
-        a(href='/deletepoll'+'?name='+'#{name}') delete #{name}
       p
         a(href='/logout') logout
