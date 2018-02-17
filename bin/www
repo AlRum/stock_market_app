@@ -52,10 +52,14 @@ io.on('page_loaded', function(msg){
   res.send('<h1>Hello world</h1>');
 });*/
 
+io.on('connection', function(socket){
+ /* socket.on('chat message', function(msg){
+    console.log('message: ' + msg);
+    io.emit('chat message', msg);
+  });*/
 
 
-
-io.on('change graph', function(msg){
+socket.on('change graph', function(msg){
       console.log('AHAHAHAH');
       msg = msg.replace(/\s/g, '');
       var stock=msg;
@@ -149,7 +153,7 @@ io.on('change graph', function(msg){
 	
 })
 
-io.on('add stock', function(msg){
+socket.on('add stock', function(msg){
   io.emit('add stock', msg);
 })
 
@@ -158,7 +162,7 @@ io.on('add stock', function(msg){
 
 
 
-io.on('delete graph', function(msg){
+socket.on('delete graph', function(msg){
   console.log(msg);
 
 
@@ -188,7 +192,7 @@ io.on('delete graph', function(msg){
 					)
 })
 })
-
+})
 http.listen(app.get('port'), function(){
   console.log('listening on *:3000');
 });
