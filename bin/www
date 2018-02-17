@@ -12,6 +12,8 @@ var io = require('socket.io')(http_);*/
 var http = require('http').createServer(app);
 var io = require('socket.io')(http);
 
+//io.set('transports', ['xhr-polling']);
+
 
 var request = require('request');
 
@@ -32,12 +34,12 @@ function plotgraph(){
 
 //console.log(io);
 
-io.on('connection', function(socket){
+/*io.on('connection', function(socket){
   //if (error) throw error;
   console.log('a user connected');
   //Data1.remove({}, function (err) { if (err) {}  });
   plotgraph();
-});
+});*/
 /*
 io.on('page_loaded', function(msg){
   //if (error) throw error;
@@ -57,7 +59,9 @@ io.on('connection', function(socket){
     console.log('message: ' + msg);
     io.emit('chat message', msg);
   });*/
-
+console.log('a user connected');
+  //Data1.remove({}, function (err) { if (err) {}  });
+  plotgraph();
 
 socket.on('change graph', function(msg){
       console.log('AHAHAHAH');
