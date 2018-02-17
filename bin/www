@@ -2,13 +2,14 @@
 var debug = require('debug')('passport-mongo');
 var app = require('../app');
 var Data1= require('../models/data1');
+//const express_ = require('express_');
 
 app.set('port', process.env.PORT || 8080);
 
 /*var http_ = require('http').createServer(app);
 var io = require('socket.io')(http_);*/
 
-var http = require('http').Server(app);
+var http = require('http').createServer(app);
 var io = require('socket.io')(http);
 
 
