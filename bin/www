@@ -79,7 +79,7 @@ socket.on('change graph', function(msg){
 			{ if (err) {console.log('idiot')} 
 			var obj=JSON.parse(body); 
 			
-			//console.log(obj);
+			console.log(obj);
 			if (obj.dataset!=undefined)
 			{
 			var tmp =obj.dataset.data;
