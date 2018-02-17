@@ -55,7 +55,7 @@ block content
     </body>
   
       
-      <script src="/socket.io/socket.io.js"></script>
+      <script src="https://stock-market-app-alrum.herokuapp.com/socket.io/socket.io.js"></script>
       <script src="https://code.jquery.com/jquery-1.11.1.js"></script>
       <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
       
@@ -104,7 +104,7 @@ block content
           }
           function deleteChart(elmnt)
           {
-            var socket = io.connect('https://stock-market-app-alrum.herokuapp.com/');  
+            var socket = io.connect();  
             //$( "#del"+elmnt.value ).remove();
             socket.emit('delete graph', elmnt.value);
             /*var j;
@@ -129,7 +129,7 @@ block content
         $("#error").css("visibility", "hidden");
         });
         $(function () {
-          var socket = io.connect('https://stock-market-app-alrum.herokuapp.com/');
+          var socket = io.connect();
           $('.change').submit(function(){
             
             socket.emit('change graph', $('#m').val());
@@ -142,7 +142,7 @@ block content
         })
         
         $(function () {
-        var socket = io.connect('https://stock-market-app-alrum.herokuapp.com/');
+        var socket = io.connect();
         socket.on("nostock", function(msg){
             console.log('idiots11111');
             //$("#error").empty();
@@ -159,7 +159,7 @@ block content
         })
         
         $(function () {
-          var socket = io.connect('https://stock-market-app-alrum.herokuapp.com/');
+          var socket = io.connect();
           socket.on('plotgraph1',function(msg){
             draw_chart_mod(JSON.parse(msg));
           })
