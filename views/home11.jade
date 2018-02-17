@@ -61,7 +61,7 @@ block content
       <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
       
           <script type="text/javascript">
-          var socket = io.connect("https://stock-market-app-alrum.herokuapp.com");  
+          var socket = io.connect(); //"https://stock-market-app-alrum.herokuapp.com"  
       google.charts.load('current', {packages: ['corechart']});    
           
           
@@ -105,7 +105,62 @@ block content
               $( ".delete" ).empty();
             }
           }
+          function deleteChart(elmnt)
+          {
+            
+            //$( "#del"+elmnt.value ).remove();
+            socket.emit('delete graph', elmnt.value);
+            /*var j;
+            for (var i=0;i<DATA.length;i++)
+              {
+                if (DATA[i].name==elmnt.value)
+                {
+                  j=i;
+                }
+              }
+            //socket.emit('add stock', $('#m').val());
+            //$('#m').val('');
+            DATA.splice(j,1);
+            draw_chart_mod(DATA);
+            console.log("#del"+elmnt.value);
+            $( "#del"+elmnt.value ).remove();*/
+          }
           
+      
+        $( document ).ready(function() {
+        //$("#error").hide();
+        $("#error").css("visibility", "hidden");
+        });
+        $(function () {
+          
+          $('.change').submit(function(){
+            
+            socket.emit('change graph', $('#m').val());
+            document.getElementById("change1").reset();
+            //socket.emit('plotgraph', 'good');
+            //socket.emit('add stock', $('#m').val());
+            //$('#m').val('');
+            return false;
+          })
+        })
+        
+        $(function () {
+        
+        socket.on("nostock", function(msg){
+            console.log('idiots11111');
+            //$("#error").empty();
+            //$('#error').append($('<p>No such stock</p>'));
+            
+            $("#error").css("visibility", "visible");//.css("visibility", "hidden");
+            
+            $("#error").css("visibility", "visible").delay(2000).queue(function () { $(this).css("visibility", "hidden"); $(this).dequeue();});
+            //$("#error");
+            //$('#error').append($('<p><br></p>'));
+            //$('#error').show();
+            
+          });
+        })
+        
         $(function () {
           
           socket.on('plotgraph1',function(msg){
