@@ -1,6 +1,8 @@
 var express = require('express');
 var router = express.Router();
+var https = require('https');
 var Poll2= require('../models/poll2');
+var request = require('request');
 
 
 var isAuthenticated = function (req, res, next) {
@@ -12,13 +14,17 @@ var isAuthenticated = function (req, res, next) {
 	// if the user is not authenticated then redirect him to the login page
 	res.redirect('/');
 }
-
+/*
+io.on('connection', function(socket){
+  console.log('a user connected');
+});
+*/
 module.exports = function(passport){
 
 	/* GET login page. */
 	router.get('/', function(req, res) {
     	// Display the Login page with any flash message, if any
-		res.render('index.jade', { message: req.flash('message') });
+		res.render('home11.jade', { message: req.flash('message') });
 	});
 	
 	
@@ -44,7 +50,7 @@ module.exports = function(passport){
 
 	/* GET Home Page */
 	router.get('/home', isAuthenticated, function(req, res){
-		Poll2.find({"author":req.user.username},function (err, kittens) {
+		/*Poll2.find({"author":req.user.username},function (err, kittens) {
 			if (err) return console.error(err);
 				console.log(JSON.stringify(kittens.opts));
 				//console.log(kittens[2].pollname);
@@ -59,7 +65,7 @@ module.exports = function(passport){
 			if (err) return console.error(err);
 				console.log(JSON.stringify(kittens.opts));
 				//console.log(kittens[2].pollname);
-				
+			
 				
 				
 				var i=0;
@@ -68,15 +74,55 @@ module.exports = function(passport){
 					i++;
 					if (i>5) break;
 				}
+			
 		console.log(names_all)
+			*/	
 		console.log('idiots')
+		console.log('idiots gonna');
+		
+		var options = {
+			url: 'https://www.quandl.com/api/v3/datasets/WIKI/goog.json?column_index=1&start_date=2010-01-01&end_date=2017-01-01&collapse=annual&api_key=c3kCyhGGfJFsLUECjwwV'
+			};
 				//, {arr: JSON.stringify([{'idiot':'idiot'}, {'fool':'fool'}])})//{arr:JSON.stringify([{idiot:"idiot"}])});
-				
+		//https://www.quandl.com/api/v3/datasets/OPEC/ORB.csv?api_key=c3kCyhGGfJFsLUECjwwV
+		
+		request.get(options, function(err,httpResponse,body)
+			{ if (err) {console.log('idiot')} 
+			var obj=JSON.parse(body);
+			
+			console.log(obj);
+			if (obj.dataset.data.length>2)
+			{
+			var data =obj.dataset.data;
+			//data.unshift(['dates','prices'])
+			var dates=[];
+			var prices=[];
+			for (var i=0;i<data.length;i++)
+			{
+				dates[i]=data[i][0];
+				prices[i]=data[i][1];
+			}
+			console.log(dates);
+			console.log(JSON.stringify(data));
+			res.render('home11.jade', { user: req.user, data: JSON.stringify(data)  });
+			}
+			})
+			//https://jsfiddle.net/api/post/library/pure/
+		
+		/*https.get('https://www.quandl.com/api/v3/datasets/OPEC/ORB.json?api_key=c3kCyhGGfJFsLUECjwwV');
+			var data = '';
+			res.on('data', function (chunk) {
+			data += chunk;
+			console.log('idiots gonna');
+			console.log(data);
+			});*/
+			
+			
 											
 		//res.render('home.jade', { user: req.user, arr: JSON.stringify(names) });
-		res.render('home.jade', { user: req.user, arr: names, arr_all:names_all  });
-	})});
-	})
+		//res.render('home.jade', { user: req.user, arr: names, arr_all:names_all  });
+	});
+	
 
 	/* Handle Logout */
 	router.get('/signout', function(req, res) {
@@ -165,6 +211,11 @@ module.exports = function(passport){
 	req.logout();
 	res.redirect('/home');
 	});
+	
+	//https://www.quandl.com/api/v3/datasets/OPEC/ORB.csv?api_key=YOUR_API_KEY_HERE
+	//c3kCyhGGfJFsLUECjwwV
+
+	
 	
 	router.post('/poll_submit', function(req, res) {
 		//ideal place to handle the request ?

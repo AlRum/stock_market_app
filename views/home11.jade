@@ -1,0 +1,208 @@
+extends layout    
+block content
+  script(type='text/javascript').
+      //var g=JSON.parse('!{data}')
+      //console.log(g);
+  
+  
+  html.
+    <style>
+          h1{
+            text-align: center
+          }
+          
+          .delete{
+            text-align: center
+          }
+          
+          #inputstock{
+             
+            
+          }
+          
+          
+          #curve_chart{
+            margin-left: auto; 
+            margin-right: auto;
+            
+          }
+    </style>
+    <body>
+    <h1>Stockmarket app</h1>
+    <div align="center" id="inputstock">
+    <form class="change" id="change1" action="">
+    <p>Enter stockname here:</p>
+    <p align="center"><input id="m" autocomplete="off" /><button class="btn-success" >Send</button></p>
+    </form>
+    <div >
+    <p id="error">No such stock</p>
+    
+    </div>
+    </div>
+    <div id="curve_chart" style="width: 100%; height: 400px"></div>
+    
+    <!--
+    <form action="">
+    <input id="m1" autocomplete="off" /><button>Send</button>
+    </form>
+    <ul id="messages"></ul>
+    <div id="curve_chart" style="width: 900px; height: 500px"></div>
+    --!>
+    <ul id="messages"></ul>
+    <form class="delete" action="">
+    
+    </form>
+    </body>
+  
+      
+      <script src="/socket.io/socket.io.js"></script>
+      <script src="https://code.jquery.com/jquery-1.11.1.js"></script>
+      <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+      
+          <script type="text/javascript">
+      google.charts.load('current', {packages: ['corechart']});    
+          
+          function draw_chart_mod(dataarr){
+            var ii=1;
+            var arrr=[];
+            arrr.push(ii);
+            if (typeof dataarr[0] != 'undefined'){
+            var data_=new google.visualization.arrayToDataTable(dataarr[0].data);
+            var uu;
+            console.log(dataarr[0].data)
+            
+            console.log("coooool");
+            for (var i=1;i<dataarr.length;i++)
+            {
+            
+          //data_ = google.visualization.data.join(data_, dataarr[i].data, 'full', [[0, 0]], arrr, [1]);
+          //ini
+          uu=new google.visualization.arrayToDataTable(dataarr[i].data);
+          data_ = google.visualization.data.join(data_,uu, 'full', [[0, 0]], arrr, [1]);
+          ii++
+          arrr.push(ii);
+            }
+            $( ".delete" ).empty();
+            for (var i=0;i<dataarr.length;i++)
+            {
+            var stock = dataarr[i].data[0][0]; 
+            var r= $('<input type="button" class="btn btn-danger" id="del' +stock+ '" value="'+stock+'" onclick="deleteChart(this)"/>');
+              $(".delete").append(r);
+            }
+            var options1 = {
+              title: 'Company Performance',
+              chartArea:{bottom:20,top:20,width:"50%",height:"100%"}
+              };
+              
+              var chartt = new google.visualization.LineChart(document.getElementById('curve_chart'));
+              //new google.visualization.ComboChart(document.getElementById('curve_chart')).draw(data1, options);
+              chartt.draw(data_, options1);
+            }
+            else {$("#curve_chart").empty()
+              $( ".delete" ).empty();
+            }
+          }
+          function deleteChart(elmnt)
+          {
+            var socket = io();  
+            //$( "#del"+elmnt.value ).remove();
+            socket.emit('delete graph', elmnt.value);
+            /*var j;
+            for (var i=0;i<DATA.length;i++)
+              {
+                if (DATA[i].name==elmnt.value)
+                {
+                  j=i;
+                }
+              }
+            //socket.emit('add stock', $('#m').val());
+            //$('#m').val('');
+            DATA.splice(j,1);
+            draw_chart_mod(DATA);
+            console.log("#del"+elmnt.value);
+            $( "#del"+elmnt.value ).remove();*/
+          }
+          
+      
+        $( document ).ready(function() {
+        //$("#error").hide();
+        $("#error").css("visibility", "hidden");
+        });
+        $(function () {
+          var socket = io();
+          $('.change').submit(function(){
+            
+            socket.emit('change graph', $('#m').val());
+            document.getElementById("change1").reset();
+            //socket.emit('plotgraph', 'good');
+            //socket.emit('add stock', $('#m').val());
+            //$('#m').val('');
+            return false;
+          })
+        })
+        
+        $(function () {
+        var socket = io();
+        socket.on("nostock", function(msg){
+            console.log('idiots11111');
+            //$("#error").empty();
+            //$('#error').append($('<p>No such stock</p>'));
+            
+            $("#error").css("visibility", "visible");//.css("visibility", "hidden");
+            
+            $("#error").css("visibility", "visible").delay(2000).queue(function () { $(this).css("visibility", "hidden"); $(this).dequeue();});
+            //$("#error");
+            //$('#error').append($('<p><br></p>'));
+            //$('#error').show();
+            
+          });
+        })
+        
+        $(function () {
+          var socket = io();
+          socket.on('plotgraph1',function(msg){
+            draw_chart_mod(JSON.parse(msg));
+          })
+        })
+        
+        
+          
+          
+          /*
+          socket.on('nostock', function(msg){
+            console.log('idiots11111');
+            $("#error").empty();
+            $('#error').append($('<p>No such stock</p>'));
+            $("#error").show().delay(3000).fadeOut();
+            
+            
+          });*/
+          
+          /*socket.on('initial_plot', function(msg){
+            
+            console.log(JSON.parse(msg));
+            draw_chart_mod(JSON.parse(msg));
+          });
+          
+          socket.on('change graph', function(msg){
+              
+              var r= $('<input type="button" class="btn btn-danger" id="del' +stock+ '" value="'+stock+'" onclick="deleteChart(this)"/>');
+              $(".delete").append(r);
+              
+              
+              
+              var options1 = {
+              title: 'Company Performance'
+              
+              };
+              //socket.emit("add_data",DATA);
+          });*/
+      </script>
+      
+  
+          <html>
+          <head>
+          
+            </head>
+            
+            </html>
