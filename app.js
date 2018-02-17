@@ -9,6 +9,10 @@ var dbConfig = require('./db');
 var mongoose = require('mongoose');
 // Connect to DB
 mongoose.connect(dbConfig.url);
+if (err) {
+    console.log('Unable to connect to the mongoDB server. Error:', err);
+  } else {
+    console.log('Connection established to', dbConfig.url);
 
 var app = express();
 
