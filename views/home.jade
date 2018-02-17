@@ -164,6 +164,7 @@ block content
         $(function () {
           
           socket.on('plotgraph1',function(msg){
+            console.log('plotting');
             draw_chart_mod(JSON.parse(msg));
           })
         })
