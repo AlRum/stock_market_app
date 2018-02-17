@@ -106,6 +106,46 @@ block content
             }
           }
           
+        $(function () {
+          
+          socket.on('plotgraph1',function(msg){
+            draw_chart_mod(JSON.parse(msg));
+          })
+        })
+        
+        
+          
+          
+          /*
+          socket.on('nostock', function(msg){
+            console.log('idiots11111');
+            $("#error").empty();
+            $('#error').append($('<p>No such stock</p>'));
+            $("#error").show().delay(3000).fadeOut();
+            
+            
+          });*/
+          
+          /*socket.on('initial_plot', function(msg){
+            
+            console.log(JSON.parse(msg));
+            draw_chart_mod(JSON.parse(msg));
+          });
+          
+          socket.on('change graph', function(msg){
+              
+              var r= $('<input type="button" class="btn btn-danger" id="del' +stock+ '" value="'+stock+'" onclick="deleteChart(this)"/>');
+              $(".delete").append(r);
+              
+              
+              
+              var options1 = {
+              title: 'Company Performance'
+              
+              };
+              //socket.emit("add_data",DATA);
+          });*/
+      </script>
       
   
           <html>
