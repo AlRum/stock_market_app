@@ -13,6 +13,11 @@ mongoose.connect(dbConfig.url, function(error) {
   console.log(error)
 });
 
+var db=mongoose.connection;
+db.once('open', function() {
+  "YAY";
+});
+
 
 var app = express();
 
