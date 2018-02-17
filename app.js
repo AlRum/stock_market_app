@@ -15,7 +15,7 @@ mongoose.connect(dbConfig.url, function(error) {
 
 var db=mongoose.connection;
 db.once('open', function() {
-  "YAY";
+  console.log("YAY");
 });
 
 
