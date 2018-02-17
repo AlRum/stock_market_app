@@ -104,7 +104,7 @@ block content
           }
           function deleteChart(elmnt)
           {
-            var socket = io('https://stock-market-app-alrum.herokuapp.com/');  
+            var socket = io.connect('https://stock-market-app-alrum.herokuapp.com/');  
             //$( "#del"+elmnt.value ).remove();
             socket.emit('delete graph', elmnt.value);
             /*var j;
@@ -129,7 +129,7 @@ block content
         $("#error").css("visibility", "hidden");
         });
         $(function () {
-          var socket = io('https://stock-market-app-alrum.herokuapp.com/');
+          var socket = io.connect('https://stock-market-app-alrum.herokuapp.com/');
           $('.change').submit(function(){
             
             socket.emit('change graph', $('#m').val());
@@ -142,7 +142,7 @@ block content
         })
         
         $(function () {
-        var socket = io('https://stock-market-app-alrum.herokuapp.com/');
+        var socket = io.connect('https://stock-market-app-alrum.herokuapp.com/');
         socket.on("nostock", function(msg){
             console.log('idiots11111');
             //$("#error").empty();
@@ -159,7 +159,7 @@ block content
         })
         
         $(function () {
-          var socket = io('https://stock-market-app-alrum.herokuapp.com/');
+          var socket = io.connect('https://stock-market-app-alrum.herokuapp.com/');
           socket.on('plotgraph1',function(msg){
             draw_chart_mod(JSON.parse(msg));
           })
