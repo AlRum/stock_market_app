@@ -8,6 +8,14 @@ var mongoose = require('mongoose');
 
 //var app=express();
 
+// Connect to DB
+console.log("Connect to DB")
+mongoose.connect(dbConfig.url, function(error) {
+  console.log("ERROR")
+  console.log(error)
+});
+
+var db=mongoose.connection;
 
 
 app.set('port', process.env.PORT || 8080);
@@ -31,17 +39,6 @@ function plotgraph(){
 }
 
 io.on('connection', function(socket){
-	// Connect to DB
-console.log("Connect to DB")
-mongoose.connect(dbConfig.url, function(error) {
-  console.log("ERROR")
-  console.log(error)
-});
-
-var db=mongoose.connection;
-db.once('open', function() {
-  console.log("YAY");
-});
 	console.log('a user connected');
 	plotgraph();
 
@@ -152,6 +149,10 @@ db.once('open', function() {
 		})
 		})
 		})
-http.listen(app.get('port'), function(){
+db.once('open', function() {
+  console.log("YAY");
+  http.listen(app.get('port'), function(){
 	console.log('listening on *:3000');
 });
+});
+
