@@ -1,12 +1,12 @@
 #!/usr/bin/env node
 var debug = require('debug')('passport-mongo');
-var express = require('express');
+var app = require('../app');
 var Data1= require('../models/data1');
 var request = require('request');
 var dbConfig = require('../db');
 var mongoose = require('mongoose');
 
-var app=express();
+//var app=express();
 
 // Connect to DB
 console.log("Connect to DB")
