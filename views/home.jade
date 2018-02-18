@@ -1,9 +1,7 @@
 extends layout    
 block content
   script(type='text/javascript').
-      //var g=JSON.parse('!{data}')
-      //console.log(g);
-      //https://stock-market-app-alrum.herokuapp.com/socket.io/socket.io.js
+      
   
   
   html.
@@ -15,10 +13,7 @@ block content
           .delete{
             text-align: center
           }
-          
           #inputstock{
-             
-            
           }
           
           
@@ -42,13 +37,6 @@ block content
     </div>
     <div id="curve_chart" style="width: 100%; height: 400px"></div>
     
-    <!--
-    <form action="">
-    <input id="m1" autocomplete="off" /><button>Send</button>
-    </form>
-    <ul id="messages"></ul>
-    <div id="curve_chart" style="width: 900px; height: 500px"></div>
-    --!>
     <ul id="messages"></ul>
     <form class="delete" action="">
     
@@ -78,8 +66,7 @@ block content
             for (var i=1;i<dataarr.length;i++)
             {
             
-          //data_ = google.visualization.data.join(data_, dataarr[i].data, 'full', [[0, 0]], arrr, [1]);
-          //ini
+          
           uu=new google.visualization.arrayToDataTable(dataarr[i].data);
           data_ = google.visualization.data.join(data_,uu, 'full', [[0, 0]], arrr, [1]);
           ii++
@@ -110,20 +97,7 @@ block content
             
             //$( "#del"+elmnt.value ).remove();
             socket.emit('delete graph', elmnt.value);
-            /*var j;
-            for (var i=0;i<DATA.length;i++)
-              {
-                if (DATA[i].name==elmnt.value)
-                {
-                  j=i;
-                }
-              }
-            //socket.emit('add stock', $('#m').val());
-            //$('#m').val('');
-            DATA.splice(j,1);
-            draw_chart_mod(DATA);
-            console.log("#del"+elmnt.value);
-            $( "#del"+elmnt.value ).remove();*/
+            
           }
           
       
@@ -137,9 +111,6 @@ block content
             
             socket.emit('change graph', $('#m').val());
             document.getElementById("change1").reset();
-            //socket.emit('plotgraph', 'good');
-            //socket.emit('add stock', $('#m').val());
-            //$('#m').val('');
             return false;
           })
         })
@@ -147,16 +118,13 @@ block content
         $(function () {
         
         socket.on("nostock", function(msg){
-            console.log('idiots111111');
-            //$("#error").empty();
-            //$('#error').append($('<p>No such stock</p>'));
+            console.log('nostock');
+            
             
             $("#error").css("visibility", "visible");//.css("visibility", "hidden");
             
             $("#error").css("visibility", "visible").delay(2000).queue(function () { $(this).css("visibility", "hidden"); $(this).dequeue();});
-            //$("#error");
-            //$('#error').append($('<p><br></p>'));
-            //$('#error').show();
+            
             
           });
         })
@@ -172,35 +140,7 @@ block content
         
           
           
-          /*
-          socket.on('nostock', function(msg){
-            console.log('idiots11111');
-            $("#error").empty();
-            $('#error').append($('<p>No such stock</p>'));
-            $("#error").show().delay(3000).fadeOut();
-            
-            
-          });*/
           
-          /*socket.on('initial_plot', function(msg){
-            
-            console.log(JSON.parse(msg));
-            draw_chart_mod(JSON.parse(msg));
-          });
-          
-          socket.on('change graph', function(msg){
-              
-              var r= $('<input type="button" class="btn btn-danger" id="del' +stock+ '" value="'+stock+'" onclick="deleteChart(this)"/>');
-              $(".delete").append(r);
-              
-              
-              
-              var options1 = {
-              title: 'Company Performance'
-              
-              };
-              //socket.emit("add_data",DATA);
-          });*/
       </script>
       
   
@@ -208,5 +148,4 @@ block content
           <head>
           
             </head>
-            
             </html>
