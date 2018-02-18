@@ -5,7 +5,7 @@ var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 
-var dbConfig = require('./db');
+/*var dbConfig = require('./db');
 var mongoose = require('mongoose');
 // Connect to DB
 console.log("Connect to DB")
@@ -17,7 +17,7 @@ mongoose.connect(dbConfig.url, function(error) {
 var db=mongoose.connection;
 db.once('open', function() {
   console.log("YAY");
-});
+});*/
 
 
 var app = express();

@@ -3,6 +3,23 @@ var debug = require('debug')('passport-mongo');
 var app = require('../app');
 var Data1= require('../models/data1');
 var request = require('request');
+var dbConfig = require('../db');
+var mongoose = require('mongoose');
+// Connect to DB
+console.log("Connect to DB")
+mongoose.connect(dbConfig.url, function(error) {
+  console.log("ERROR")
+  console.log(error)
+});
+
+var db=mongoose.connection;
+db.once('open', function() {
+  console.log("YAY");
+});
+
+
+
+
 
 app.set('port', process.env.PORT || 8080);
 
