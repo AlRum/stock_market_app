@@ -26,7 +26,7 @@ var io = require('socket.io')(http);
 function plotgraph(){
 	
 	console.log('plot function');
-	
+	/*
 	Data1.find({},function (err, kittens1) {
 				  if (err){};
 				  
@@ -35,7 +35,8 @@ function plotgraph(){
 		console.log(kittens1[0].data1);
 		io.emit('plotgraph1', kittens1[0].data1);
 	}
-	})
+	})*/
+	io.emit('plotgraph1', "ABC");
 }
 
 io.on('connection', function(socket){
