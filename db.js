@@ -3,3 +3,5 @@ module.exports = {
 	//'url' : 'mongodb://localhost/test'
 	'url' : 'mongodb://shiroc:123@ds235788.mlab.com:35788/stock_market'
 }
+
+
