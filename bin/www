@@ -10,7 +10,7 @@ var mongoose = require('mongoose');
 
 // Connect to DB
 console.log("Connect to DB")
-mongoose.connect(dbConfig.url, function(error) {
+mongoose.connect('mongodb://shiroc:123@ds235788.mlab.com:35788/stock_market', function(error) {
   if(error) console.log(error);
   console.log("connection successful");
   var db=mongoose.connection;
